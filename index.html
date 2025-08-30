@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="bn" class="scroll-smooth" style="--accent:#6366f1; --bg:#0b1020; --muted:#94a3b8;">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Frontend Portfolio | Advanced</title>
+  <meta name="description" content="Advanced single-file portfolio for a Frontend Developer using HTML, Tailwind CSS, and vanilla JavaScript." />
+  <meta property="og:title" content="Frontend Portfolio | Advanced" />
+  <meta property="og:description" content="Advanced single-file portfolio for a Frontend Developer using HTML, Tailwind CSS, and vanilla JavaScript." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#6366f1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular']
+          },
+          colors: {
+            accent: 'var(--accent)'
+          },
+          boxShadow: {
+            glow: '0 0 0 .5px rgba(255,255,255,.1), 0 10px 30px -10px rgba(99,102,241,.6)'
+          },
+          backgroundImage: {
+            'noise': "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><filter id=\"n\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.6\" numOctaves=\"2\" stitchTiles=\"stitch\"/></filter><rect width=\"100%\" height=\"100%\" filter=\"url(%23n)\" opacity=\"0.05\"/></svg>')",
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Base visuals */
+    :root { color-scheme: light dark; }
+    html { background: radial-gradient(1200px 800px at 80% -10%, rgba(99,102,241,.15), transparent 60%), radial-gradient(900px 600px at -10% 20%, rgba(34,197,94,.15), transparent 50%), #0b1020; }
+    .dark html, .dark body { background-color: #0b1020; }
+
+    /* Reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.show { opacity: 1; transform: none; }
+
+    /* 3D hover tilt helpers */
+    .tilt { transform-style: preserve-3d; }
+    .tilt > .tilt-child { transform: translateZ(30px); }
+
+    /* Gradient stroke button */
+    .btn-outline {
+      position: relative; isolation: isolate;
+    }
+    .btn-outline::before {
+      content: ""; position: absolute; inset: 0; border-radius: 9999px; padding: 1px; background: linear-gradient(90deg, var(--accent), #22c55e, #06b6d4);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude; z-index: -1;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(var(--accent), #22c55e); border-radius: 9999px; }
+
+    /* Command palette */
+    #cmdk[open] { animation: fadeIn .15s ease; }
+    @keyframes fadeIn { from{opacity:0; transform: scale(.98)} to{opacity:1; transform:none} }
+  </style>
+</head>
+<body class="text-slate-100 selection:bg-accent/30 selection:text-white">
+  <!--
+    =============================================================
+    ADVANCED FRONTEND PORTFOLIO — SINGLE FILE
+    Stack: HTML + Tailwind + Vanilla JS (no build step)
+    How to personalize quickly:
+      1) Search for TODO and replace values.
+      2) Set your GitHub username in JS to auto-fill pinned repos (optional).
+      3) Set FORMSPREE_ENDPOINT to your Formspree URL for working contact form.
+      4) Replace placeholder images/links in Projects and Blog.
+    =============================================================
+  -->
+
+  <!-- Skip link for a11y -->
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:z-50 focus:top-4 focus:left-4 focus:px-3 focus:py-2 focus:rounded-lg focus:bg-slate-900 focus:text-white">Skip to content</a>
+
+  <!-- Header / Nav -->
+  <header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-black/40">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex h-16 items-center justify-between">
+        <a href="#" class="group inline-flex items-center gap-3">
+          <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-accent to-emerald-500 grid place-items-center shadow-glow">
+            <svg viewBox="0 0 24 24" class="h-5 w-5"><path fill="white" d="M12 2l3 6 6 .9-4.5 4.3L17.8 20 12 16.8 6.2 20l1.3-6.8L3 8.9 9 8l3-6z"/></svg>
+          </div>
+          <span class="font-bold tracking-tight text-white text-lg">Shihab Ahmed</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-1 text-sm">
+          <a href="#projects" class="px-3 py-2 rounded-lg hover:bg-white/5">Projects</a>
+          <a href="#skills" class="px-3 py-2 rounded-lg hover:bg-white/5">Skills</a>
+          <a href="#experience" class="px-3 py-2 rounded-lg hover:bg-white/5">Experience</a>
+          <a href="#services" class="px-3 py-2 rounded-lg hover:bg-white/5">Services</a>
+          <a href="#blog" class="px-3 py-2 rounded-lg hover:bg-white/5">Blog</a>
+          <a href="#contact" class="px-3 py-2 rounded-lg hover:bg-white/5">Contact</a>
+        </nav>
+        <div class="flex items-center gap-2">
+          <!-- Theme color chooser -->
+          <div class="relative">
+            <button id="colorBtn" title="Theme color" class="h-10 w-10 rounded-full bg-[var(--accent)] ring-2 ring-white/10"></button>
+            <div id="colorMenu" class="hidden absolute right-0 mt-2 w-44 rounded-xl border border-white/10 bg-slate-900 p-2 shadow-xl">
+              <div class="grid grid-cols-6 gap-2">
+                <button data-color="#6366f1" class="h-7 w-7 rounded-full bg-indigo-500"></button>
+                <button data-color="#22c55e" class="h-7 w-7 rounded-full bg-emerald-500"></button>
+                <button data-color="#06b6d4" class="h-7 w-7 rounded-full bg-cyan-500"></button>
+                <button data-color="#f97316" class="h-7 w-7 rounded-full bg-orange-500"></button>
+                <button data-color="#ef4444" class="h-7 w-7 rounded-full bg-red-500"></button>
+                <button data-color="#a855f7" class="h-7 w-7 rounded-full bg-purple-500"></button>
+              </div>
+            </div>
+          </div>
+          <!-- Dark mode toggle -->
+          <button id="themeToggle" aria-label="Toggle dark mode" class="h-10 w-10 grid place-items-center rounded-full border border-white/10 hover:bg-white/5">
+            <svg id="sun" class="h-5 w-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364l-1.414 1.414M7.05 16.95l-1.414 1.414m12.728 0l-1.414-1.414M7.05 7.05 5.636 5.636"/><circle cx="12" cy="12" r="4"/></svg>
+            <svg id="moon" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
+          </button>
+          <!-- Mobile menu -->
+          <button id="menuBtn" class="md:hidden h-10 w-10 grid place-items-center rounded-full border border-white/10 hover:bg-white/5" aria-label="Open menu">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+        </div>
+      </div>
+      <!-- Mobile nav -->
+      <div id="mobileNav" class="hidden md:hidden border-t border-white/10 py-3">
+        <nav class="grid gap-1 text-sm">
+          <a href="#projects" class="px-3 py-2 rounded-lg hover:bg-white/5">Projects</a>
+          <a href="#skills" class="px-3 py-2 rounded-lg hover:bg-white/5">Skills</a>
+          <a href="#experience" class="px-3 py-2 rounded-lg hover:bg-white/5">Experience</a>
+          <a href="#services" class="px-3 py-2 rounded-lg hover:bg-white/5">Services</a>
+          <a href="#blog" class="px-3 py-2 rounded-lg hover:bg-white/5">Blog</a>
+          <a href="#contact" class="px-3 py-2 rounded-lg hover:bg-white/5">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <!-- HERO -->
+    <section id="hero" class="pt-14 pb-20 sm:pt-20 relative">
+      <div class="absolute inset-0 -z-10 bg-noise opacity-50"></div>
+      <div class="grid lg:grid-cols-2 gap-10 items-center">
+        <div class="reveal">
+          <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300">
+            <span class="h-1.5 w-1.5 rounded-full bg-[var(--accent)]"></span> উপলব্ধ ফ্রিল্যান্স প্রজেক্টের জন্য
+          </div>
+          <h1 class="mt-4 text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent)] to-emerald-400">Shihab Ahmed</span>
+          </h1>
+          <p class="mt-3 text-lg text-slate-300">Frontend Developer • <span id="typed" class="text-white font-semibold"></span></p>
+          <p class="mt-5 max-w-xl text-slate-300">React, Next.js, Tailwind, TypeScript, UI Engineering, Design Systems, এবং পারফরম্যান্স অপ্টিমাইজেশনে ফোকাস।</p>
+          <div class="mt-8 flex flex-wrap items-center gap-3">
+            <a href="#projects" class="inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-5 py-3 font-semibold text-white shadow-glow hover:opacity-90 active:scale-[.98]">See Projects
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+            <a href="./assets/Resume.pdf" class="btn-outline inline-flex items-center gap-2 rounded-full px-5 py-3 font-semibold text-white/90 hover:text-white" download>Download CV
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></a>
+          </div>
+          <div class="mt-8 flex items-center gap-4 text-slate-300">
+            <a href="#" aria-label="GitHub" class="hover:text-white"> <!-- TODO: link -->
+              <svg class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.34-1.75-1.34-1.75-1.09-.74.08-.72.08-.72 1.2.08 1.83 1.23 1.83 1.23 1.07 1.82 2.81 1.3 3.5.99.11-.78.42-1.3.76-1.6-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.17 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23.65 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.49 5.93.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.82.57A12 12 0 0 0 12 .5Z"/></svg>
+            </a>
+            <a href="#" aria-label="LinkedIn" class="hover:text-white"> <!-- TODO: link -->
+              <svg class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V24h-4zM8.5 8.5h3.8v2.11h.05c.53-1 1.82-2.06 3.75-2.06 4.01 0 4.75 2.64 4.75 6.06V24h-4v-6.98c0-1.66-.03-3.79-2.31-3.79-2.31 0-2.66 1.8-2.66 3.67V24h-4z"/></svg>
+            </a>
+            <a href="mailto:you@example.com" class="hover:text-white">you@example.com</a>
+          </div>
+        </div>
+        <div class="relative reveal">
+          <div class="absolute -inset-10 -z-10 opacity-40 blur-3xl" style="background: radial-gradient(600px 300px at 70% 30%, var(--accent), transparent 60%), radial-gradient(400px 300px at 10% 80%, #22c55e, transparent 60%)"></div>
+          <div class="tilt group rounded-2xl border border-white/10 bg-gradient-to-br from-white/[.04] to-white/[.02] p-6 shadow-2xl">
+            <div class="tilt-child relative aspect-[4/3] overflow-hidden rounded-xl ring-1 ring-white/10">
+              <img src="https://images.unsplash.com/photo-1526378722484-bd91ca387e72?q=80&w=1200&auto=format&fit=crop" alt="Coding" class="h-full w-full object-cover opacity-90 group-hover:scale-[1.03] transition"/>
+              <div class="absolute inset-0 bg-gradient-to-tr from-[var(--accent)]/30 to-transparent mix-blend-overlay"></div>
+              <div class="absolute bottom-4 left-4 right-4 backdrop-blur-sm bg-black/30 rounded-lg p-3 flex items-center justify-between">
+                <div>
+                  <p class="text-xs text-slate-300">বর্তমান ফোকাস</p>
+                  <p class="font-semibold">Design Systems • DX • Accessibility</p>
+                </div>
+                <span class="text-xs text-slate-300">+ Lighthouse 95–100</span>
+              </div>
+            </div>
+            <div class="mt-4 grid grid-cols-3 sm:grid-cols-6 gap-2 text-xs">
+              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">React</span>
+              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">Next.js</span>
+              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">TypeScript</span>
+              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">Tailwind</span>
+              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">Node</span>
+              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">GraphQL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STACK MARQUEE -->
+    <section class="py-8 border-y border-white/10">
+      <div class="flex gap-8 animate-[marquee_30s_linear_infinite] whitespace-nowrap opacity-80" style="--tw: translate3d(0,0,0)">
+        <div class="flex items-center gap-8">
+          <span class="font-mono text-sm">HTML5</span>
+          <span class="font-mono text-sm">CSS3</span>
+          <span class="font-mono text-sm">JavaScript</span>
+          <span class="font-mono text-sm">TypeScript</span>
+          <span class="font-mono text-sm">React</span>
+          <span class="font-mono text-sm">Next.js</span>
+          <span class="font-mono text-sm">Vite</span>
+          <span class="font-mono text-sm">Redux</span>
+          <span class="font-mono text-sm">Zustand</span>
+          <span class="font-mono text-sm">Tailwind</span>
+          <span class="font-mono text-sm">Framer Motion</span>
+          <span class="font-mono text-sm">GSAP</span>
+          <span class="font-mono text-sm">Playwright</span>
+          <span class="font-mono text-sm">Jest</span>
+          <span class="font-mono text-sm">Cypress</span>
+          <span class="font-mono text-sm">Storybook</span>
+          <span class="font-mono text-sm">Figma</span>
+        </div>
+      </div>
+      <style>@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}</style>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="py-16">
+      <div class="flex items-end justify-between">
+        <div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Projects</h2>
+          <p class="mt-2 text-slate-300">প্রডাকশন-রেডি কিছু কাজের নমুনা।</p>
+        </div>
+        <div class="hidden sm:flex items-center gap-2">
+          <button class="filter-btn px-3 py-1.5 rounded-lg border border-white/10 hover:bg-white/5" data-filter="all">All</button>
+          <button class="filter-btn px-3 py-1.5 rounded-lg border border-white/10 hover:bg-white/5" data-filter="react">React</button>
+          <button class="filter-btn px-3 py-1.5 rounded-lg border border-white/10 hover:bg-white/5" data-filter="next">Next.js</button>
+          <button class="filter-btn px-3 py-1.5 rounded-lg border border-white/10 hover:bg-white/5" data-filter="vanilla">Vanilla</button>
+        </div>
+      </div>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <!-- Card 1 -->
+        <article class="project-card group rounded-2xl border border-white/10 bg-white/[.03] p-4 hover:bg-white/[.05] transition tilt" data-tags="react">
+          <div class="relative overflow-hidden rounded-xl">
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" alt="Project" class="h-48 w-full object-cover group-hover:scale-[1.02] transition" />
+            <a href="#" class="absolute inset-0" aria-label="Open project"></a>
+            <div class="absolute top-3 left-3 inline-flex items-center gap-1 rounded-full bg-black/60 px-2 py-1 text-xs">React • Tailwind</div>
+          </div>
+          <div class="mt-4">
+            <h3 class="font-semibold text-lg">{/* TODO */} Dashboard UI Kit</h3>
+            <p class="mt-1 text-sm text-slate-300">Reusable React components, dark mode, charts, and a11y baked-in.</p>
+            <div class="mt-3 flex items-center gap-3 text-sm">
+              <a href="#" class="inline-flex items-center gap-1 hover:text-white">Live <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></a>
+              <a href="#" class="inline-flex items-center gap-1 hover:text-white">Code <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18-6-6 6-6"/><path d="m15 6 6 6-6 6"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <!-- Card 2 -->
+        <article class="project-card group rounded-2xl border border-white/10 bg-white/[.03] p-4 hover:bg-white/[.05] transition tilt" data-tags="next">
+          <div class="relative overflow-hidden rounded-xl">
+            <img src="https://images.unsplash.com/photo-1550439062-609e1531270e?q=80&w=1200&auto=format&fit=crop" alt="Project" class="h-48 w-full object-cover group-hover:scale-[1.02] transition" />
+            <a href="#" class="absolute inset-0" aria-label="Open project"></a>
+            <div class="absolute top-3 left-3 inline-flex items-center gap-1 rounded-full bg-black/60 px-2 py-1 text-xs">Next.js • SSR</div>
+          </div>
+          <div class="mt-4">
+            <h3 class="font-semibold text-lg">E‑commerce Starter</h3>
+            <p class="mt-1 text-sm text-slate-300">Next.js SSR, Stripe Checkout, Zustand cart, CMS-ready.</p>
+            <div class="mt-3 flex items-center gap-3 text-sm">
+              <a href="#" class="inline-flex items-center gap-1 hover:text-white">Live <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></a>
+              <a href="#" class="inline-flex items-center gap-1 hover:text-white">Code <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18-6-6 6-6"/><path d="m15 6 6 6-6 6"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <!-- Card 3 -->
+        <article class="project-card group rounded-2xl border border-white/10 bg-white/[.03] p-4 hover:bg-white/[.05] transition tilt" data-tags="vanilla">
+          <div class="relative overflow-hidden rounded-xl">
+            <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1200&auto=format&fit=crop" alt="Project" class="h-48 w-full object-cover group-hover:scale-[1.02] transition" />
+            <a href="#" class="absolute inset-0" aria-label="Open project"></a>
+            <div class="absolute top-3 left-3 inline-flex items-center gap-1 rounded-full bg-black/60 px-2 py-1 text-xs">Vanilla • Web Components</div>
+          </div>
+          <div class="mt-4">
+            <h3 class="font-semibold text-lg">UI Patterns Library</h3>
+            <p class="mt-1 text-sm text-slate-300">HTMX‑style progressive enhancement with no framework.</p>
+            <div class="mt-3 flex items-center gap-3 text-sm">
+              <a href="#" class="inline-flex items-center gap-1 hover:text-white">Live <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></a>
+              <a href="#" class="inline-flex items-center gap-1 hover:text-white">Code <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18-6-6 6-6"/><path d="m15 6 6 6-6 6"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <!-- Card 4 -->
+        <article class="project-card group rounded-2xl border border-white/10 bg-white/[.03] p-4 hover:bg-white/[.05] transition tilt" data-tags="react">
+          <div class="relative overflow-hidden rounded-xl">
+            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&auto=format&fit=crop" alt="Project" class="h-48 w-full object-cover group-hover:scale-[1.02] transition" />
+            <a href="#" class="absolute inset-0" aria-label="Open project"></a>
+            <div class="absolute top-3 left-3 inline-flex items-center gap-1 rounded-full bg-black/60 px-2 py-1 text-xs">React • Charts</div>
+          </div>
+          <div class="mt-4">
+            <h3 class="font-semibold text-lg">Analytics Playground</h3>
+            <p class="mt-1 text-sm text-slate-300">D3 + Canvas hybrid charts with 120 FPS interactions.</p>
+            <div class="mt-3 flex items-center gap-3 text-sm">
+              <a href="#" class="inline-flex items-center gap-1 hover:text-white">Live <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></a>
+              <a href="#" class="inline-flex items-center gap-1 hover:text-white">Code <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18-6-6 6-6"/><path d="m15 6 6 6-6 6"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <!-- Card 5 -->
+        <article class="project-card group rounded-2xl border border-white/10 bg-white/[.03] p-4 hover:bg-white/[.05] transition tilt" data-tags="next">
+          <div class="relative overflow-hidden rounded-xl">
+            <img src="https://images.unsplash.com/photo-1493612276216-ee3925520721?q=80&w=1200&auto=format&fit=crop" alt="Project" class="h-48 w-full object-cover group-hover:scale-[1.02] transition" />
+            <a href="#" class="absolute inset-0" aria-label="Open project"></a>
+            <div class="absolute top-3 left-3 inline-flex items-center gap-1 rounded-full bg-black/60 px-2 py-1 text-xs">Next.js • SEO</div>
+          </div>
+          <div class="mt-4">
+            <h3 class="font-semibold text-lg">Content Platform</h3>
+            <p class="mt-1 text-sm text-slate-300">MDX content engine, image optimization, i18n routing.</p>
+            <div class="mt-3 flex items-center gap-3 text-sm">
+              <a href="#" class="inline-flex items-center gap-1 hover:text-white">Live <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></a>
+              <a href="#" class="inline-flex items-center gap-1 hover:text-white">Code <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18-6-6 6-6"/><path d="m15 6 6 6-6 6"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <!-- Card 6 -->
+        <article class="project-card group rounded-2xl border border-white/10 bg-white/[.03] p-4 hover:bg-white/[.05] transition tilt" data-tags="vanilla">
+          <div class="relative overflow-hidden rounded-xl">
+            <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1200&auto=format&fit=crop" alt="Project" class="h-48 w-full object-cover group-hover:scale-[1.02] transition" />
+            <a href="#" class="absolute inset-0" aria-label="Open project"></a>
+            <div class="absolute top-3 left-3 inline-flex items-center gap-1 rounded-full bg-black/60 px-2 py-1 text-xs">WebGL • Canvas</div>
+          </div>
+          <div class="mt-4">
+            <h3 class="font-semibold text-lg">Shader Experiments</h3>
+            <p class="mt-1 text-sm text-slate-300">Noise fields, mouse parallax, and GPU‑driven particles.</p>
+            <div class="mt-3 flex items-center gap-3 text-sm">
+              <a href="#" class="inline-flex items-center gap-1 hover:text-white">Live <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></a>
+              <a href="#" class="inline-flex items-center gap-1 hover:text-white">Code <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18-6-6 6-6"/><path d="m15 6 6 6-6 6"/></svg></a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="py-16">
+      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Skills</h2>
+      <p class="mt-2 text-slate-300">টুলিং, ফ্রেমওয়ার্কস, টেস্টিং, এবং ডেভএক্স।</p>
+      <div class="mt-8 grid gap-6 lg:grid-cols-3">
+        <!-- Core -->
+        <div class="reveal rounded-2xl border border-white/10 bg-white/[.03] p-6">
+          <h3 class="font-semibold text-xl">Core</h3>
+          <ul class="mt-4 grid grid-cols-2 gap-3 text-sm">
+            <li class="rounded-lg border border-white/10 bg-white/5 px-3 py-2">HTML semantics</li>
+            <li class="rounded-lg border border-white/10 bg-white/5 px-3 py-2">CSS architecture (BEM/ITCSS)</li>
+            <li class="rounded-lg border border-white/10 bg-white/5 px-3 py-2">JavaScript ESNext</li>
+            <li class="rounded-lg border border-white/10 bg-white/5 px-3 py-2">TypeScript</li>
+            <li class="rounded-lg border border-white/10 bg-white/5 px-3 py-2">Accessibility (WCAG)</li>
+            <li class="rounded-lg border border-white/10 bg-white/5 px-3 py-2">Performance</li>
+          </ul>
+          <div class="mt-5 space-y-3">
+            <div>
+              <div class="flex justify-between text-xs mb-1"><span>JS/TS</span><span>90%</span></div>
+              <div class="h-2 rounded-full bg-white/10"><div class="h-2 rounded-full bg-[var(--accent)]" style="width:90%"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-xs mb-1"><span>CSS</span><span>92%</span></div>
+              <div class="h-2 rounded-full bg-white/10"><div class="h-2 rounded-full bg-emerald-500" style="width:92%"></div></div>
+            </div>
+          </div>
+        </div>
+        <!-- Frameworks -->
+        <div class="reveal rounded-2xl border border-white/10 bg-white/[.03] p-6">
+          <h3 class="font-semibold text-xl">Frameworks</h3>
+          <ul class="mt-4 grid grid-cols-2 gap-3 text-sm">
+            <li class="rounded-lg border border-white/10 bg-white/5 px-3 py-2">React • Next.js</li>
+            <li class="rounded-lg border border-white/10 bg-white/5 px-3 py-2">Vue • Nuxt</li>
+            <li class="rounded-lg border border-white/10 bg-white/5 px-3 py-2">Svelte</li>
+            <li class="rounded-lg border border-white/10 bg-white/5 px-3 py-2">Node • Express</li>
+            <li class="rounded-lg border border-white/10 bg-white/5 px-3 py-2">Tailwind • Radix UI</li>
+            <li class="rounded-lg border border-white/10 bg-white/5 px-3 py-2">Framer Motion • GSAP</li>
+          </ul>
+        </div>
+        <!-- Tooling -->
+        <div class="reveal rounded-2xl border border-white/10 bg-white/[.03] p-6">
+          <h3 class="font-semibold text-xl">Tooling & QA</h3>
+          <ul class="mt-4 grid grid-cols-2 gap-3 text-sm">
+            <li class="rounded-lg border border-white/10 bg-white/5 px-3 py-2">Vite • Turborepo</li>
+            <li class="rounded-lg border border-white/10 bg-white/5 px-3 py-2">Storybook</li>
+            <li class="rounded-lg border border-white/10 bg-white/5 px-3 py-2">Jest • Testing Library</li>
+            <li class="rounded-lg border border-white/10 bg-white/5 px-3 py-2">Playwright • Cypress</li>
+            <li class="rounded-lg border border-white/10 bg-white/5 px-3 py-2">ESLint • Prettier</li>
+            <li class="rounded-lg border border-white/10 bg-white/5 px-3 py-2">GitHub Actions</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="py-16">
+      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Experience</h2>
+      <ol class="mt-8 relative border-s border-white/10">
+        <li class="mb-10 ms-6 reveal">
+          <span class="absolute -start-3 flex h-6 w-6 items-center justify-center rounded-full bg-[var(--accent)] ring-4 ring-slate-900"></span>
+          <div class="rounded-xl border border-white/10 bg-white/[.03] p-5">
+            <div class="flex items-center justify-between">
+              <h3 class="font-semibold">Frontend Engineer — কোম্পানি A</h3>
+              <span class="text-xs text-slate-300">2023–Present</span>
+            </div>
+            <ul class="mt-3 list-disc ms-5 text-sm text-slate-300 space-y-1">
+              <li>Design system নির্মাণ, 60% কম UI churn.</li>
+              <li>Performance budget সেটআপ, LCP 40% উন্নতি।</li>
+              <li>Playwright E2E suite, 120+ critical path tests।</li>
+            </ul>
+          </div>
+        </li>
+        <li class="mb-10 ms-6 reveal">
+          <span class="absolute -start-3 flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500 ring-4 ring-slate-900"></span>
+          <div class="rounded-xl border border-white/10 bg-white/[.03] p-5">
+            <div class="flex items-center justify-between">
+              <h3 class="font-semibold">Frontend Developer — কোম্পানি B</h3>
+              <span class="text-xs text-slate-300">2021–2023</span>
+            </div>
+            <ul class="mt-3 list-disc ms-5 text-sm text-slate-300 space-y-1">
+              <li>Next.js migration, SSR + i18n রাউটিং।</li>
+              <li>Accessibility audit, WCAG 2.1 AA coverage।</li>
+            </ul>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- SERVICES / OFFERINGS -->
+    <section id="services" class="py-16">
+      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Services</h2>
+      <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div class="reveal rounded-2xl border border-white/10 bg-white/[.03] p-6 hover:shadow-glow transition">
+          <h3 class="font-semibold text-xl">UI Engineering</h3>
+          <p class="mt-2 text-sm text-slate-300">Design system, component libraries, Storybook driven dev.</p>
+        </div>
+        <div class="reveal rounded-2xl border border-white/10 bg-white/[.03] p-6 hover:shadow-glow transition">
+          <h3 class="font-semibold text-xl">Performance</h3>
+          <p class="mt-2 text-sm text-slate-300">Core Web Vitals, profiling, bundle optimization.</p>
+        </div>
+        <div class="reveal rounded-2xl border border-white/10 bg-white/[.03] p-6 hover:shadow-glow transition">
+          <h3 class="font-semibold text-xl">Accessibility</h3>
+          <p class="mt-2 text-sm text-slate-300">WCAG audits, keyboard/AT support, inclusive patterns.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- METRICS -->
+    <section class="py-16 border-y border-white/10">
+      <div class="grid gap-6 sm:grid-cols-3 text-center">
+        <div class="reveal rounded-2xl border border-white/10 bg-white/[.03] p-6">
+          <div class="text-4xl font-extrabold count" data-target="25">0</div>
+          <p class="mt-1 text-sm text-slate-300">Completed Projects</p>
+        </div>
+        <div class="reveal rounded-2xl border border-white/10 bg-white/[.03] p-6">
+          <div class="text-4xl font-extrabold count" data-target="100">0</div>
+          <p class="mt-1 text-sm text-slate-300">UI Components</p>
+        </div>
+        <div class="reveal rounded-2xl border border-white/10 bg-white/[.03] p-6">
+          <div class="text-4xl font-extrabold count" data-target="7">0</div>
+          <p class="mt-1 text-sm text-slate-300">Years Experience</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS SLIDER -->
+    <section class="py-16">
+      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Testimonials</h2>
+      <div class="mt-8 overflow-hidden rounded-2xl border border-white/10 bg-white/[.03]">
+        <div id="slider" class="flex transition-transform duration-500">
+          <figure class="min-w-full p-8">
+            <blockquote class="text-lg">“Pixel-perfect UI এবং production‑grade কোড একসাথে পাওয়া যায় খুব কম ডেভেলপারদের কাছে।”</blockquote>
+            <figcaption class="mt-4 text-sm text-slate-300">— ক্লায়েন্ট A, CTO</figcaption>
+          </figure>
+          <figure class="min-w-full p-8">
+            <blockquote class="text-lg">“আমাদের LCP 2.7s → 1.3s। কনভার্সন +18%।”</blockquote>
+            <figcaption class="mt-4 text-sm text-slate-300">— ক্লায়েন্ট B, Product Lead</figcaption>
+          </figure>
+          <figure class="min-w-full p-8">
+            <blockquote class="text-lg">“অ্যাক্সেসিবিলিটি স্ট্যান্ডার্ডে পূর্ণ কভারেজ। QA friction নাটকীয়ভাবে কমেছে।”</blockquote>
+            <figcaption class="mt-4 text-sm text-slate-300">— ক্লায়েন্ট C, QA Manager</figcaption>
+          </figure>
+        </div>
+        <div class="flex justify-center gap-2 py-4">
+          <button class="dot h-2.5 w-2.5 rounded-full bg-white/20" aria-label="slide 1"></button>
+          <button class="dot h-2.5 w-2.5 rounded-full bg-white/10" aria-label="slide 2"></button>
+          <button class="dot h-2.5 w-2.5 rounded-full bg-white/10" aria-label="slide 3"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOG -->
+    <section id="blog" class="py-16">
+      <div class="flex items-end justify-between">
+        <div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Blog</h2>
+          <p class="mt-2 text-slate-300">পারফরম্যান্স, DX, ও UI আর্কিটেকচারের নোটস।</p>
+        </div>
+        <a href="#" class="hidden sm:inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 hover:bg-white/5">সব পোস্ট</a>
+      </div>
+      <div class="mt-8 grid gap-6 md:grid-cols-3">
+        <article class="reveal rounded-2xl border border-white/10 bg-white/[.03] p-5">
+          <p class="text-xs text-slate-400">June 2025</p>
+          <h3 class="mt-2 font-semibold">RSC + Streaming UI: Practical Patterns</h3>
+          <p class="mt-1 text-sm text-slate-300">Server Components, Suspense, এবং বোধগম্য DX।</p>
+          <a href="#" class="mt-3 inline-flex items-center gap-1 text-sm hover:text-white">Read <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></a>
+        </article>
+        <article class="reveal rounded-2xl border border-white/10 bg-white/[.03] p-5">
+          <p class="text-xs text-slate-400">April 2025</p>
+          <h3 class="mt-2 font-semibold">Web Vitals Budget: A Field Guide</h3>
+          <p class="mt-1 text-sm text-slate-300">LCP/TBT/CLS বাজেট স্থাপন ও মনিটরিং।</p>
+          <a href="#" class="mt-3 inline-flex items-center gap-1 text-sm hover:text-white">Read <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></a>
+        </article>
+        <article class="reveal rounded-2xl border border-white/10 bg-white/[.03] p-5">
+          <p class="text-xs text-slate-400">January 2025</p>
+          <h3 class="mt-2 font-semibold">Design Tokens to Scales</h3>
+          <p class="mt-1 text-sm text-slate-300">Tokens → themes → systematized UI scale.</p>
+          <a href="#" class="mt-3 inline-flex items-center gap-1 text-sm hover:text-white">Read <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></a>
+        </article>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-16">
+      <div class="grid lg:grid-cols-2 gap-10 items-start">
+        <div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Contact</h2>
+          <p class="mt-2 text-slate-300">Shihab Ahmed, Chapainawabganj, Rajshahi, Bangladesh</p>
+          <ul class="mt-4 space-y-2 text-slate-300">
+            <li class="flex items-center gap-2"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21a10 10 0 1 1 0-18"/><path d="M17 8h-6"/><path d="m14 5-3 3 3 3"/></svg> <a href="#" class="hover:text-white">github.com/shihab@ahmed</a></li>
+            <li class="flex items-center gap-2"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h18"/><path d="M8 3v4"/><rect width="18" height="14" x="3" y="7" rx="2"/></svg> <a href="mailto:you@example.com" class="hover:text-white">you@example.com</a></li>
+          </ul>
+        </div>
+        <form id="contactForm" class="rounded-2xl border border-white/10 bg-white/[.03] p-6">
+          <div class="grid gap-4">
+            <div>
+              <label class="text-sm text-slate-300">Your name</label>
+              <input name="name" required class="mt-1 w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2 outline-none focus:ring-2 focus:ring-[var(--accent)]" />
+            </div>
+            <div>
+              <label class="text-sm text-slate-300">Email</label>
+              <input name="email" type="email" required class="mt-1 w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2 outline-none focus:ring-2 focus:ring-[var(--accent)]" />
+            </div>
+            <div>
+              <label class="text-sm text-slate-300">Message</label>
+              <textarea name="message" rows="5" required class="mt-1 w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2 outline-none focus:ring-2 focus:ring-[var(--accent)]"></textarea>
+            </div>
+            <div class="flex items-center gap-3">
+              <button class="inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-5 py-3 font-semibold text-white shadow-glow hover:opacity-90 active:scale-[.98]" type="submit">Send</button>
+              <p id="formStatus" class="text-sm text-slate-300"></p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-white/10 py-8">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between text-sm text-slate-400">
+      <p>© <span id="year"></span> Shihab Ahmed. All rights reserved.</p>
+      <a href="#hero" class="inline-flex items-center gap-1 hover:text-white">Back to top <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 11 5-5 5 5"/><path d="M12 6v12"/></svg></a>
+    </div>
+  </footer>
+
+  <!-- Command palette -->
+  <dialog id="cmdk" class="w-full max-w-xl rounded-2xl border border-white/10 bg-slate-900/95 p-0 text-white">
+    <div class="border-b border-white/10 p-3">
+      <input id="cmdInput" placeholder="/ search or jump…" class="w-full bg-transparent outline-none" />
+    </div>
+    <div id="cmdList" class="p-2 text-sm max-h-[50vh] overflow-y-auto">
+      <button data-jump="#projects" class="w-full text-left px-3 py-2 rounded-lg hover:bg-white/5">Go to Projects</button>
+      <button data-jump="#skills" class="w-full text-left px-3 py-2 rounded-lg hover:bg-white/5">Go to Skills</button>
+      <button data-jump="#experience" class="w-full text-left px-3 py-2 rounded-lg hover:bg-white/5">Go to Experience</button>
+      <button data-jump="#services" class="w-full text-left px-3 py-2 rounded-lg hover:bg-white/5">Go to Services</button>
+      <button data-jump="#blog" class="w-full text-left px-3 py-2 rounded-lg hover:bg-white/5">Go to Blog</button>
+      <button data-jump="#contact" class="w-full text-left px-3 py-2 rounded-lg hover:bg-white/5">Go to Contact</button>
+    </div>
+  </dialog>
+
+  <!-- External light deps -->
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+  <script>
+    // =================== CONFIG ===================
+    // TODO: personalize these
+    const PROFILE = {
+      name: 'আপনার নাম',
+      email: 'you@example.com',
+      github: 'your-username', // for links only in this file
+    };
+    const FORMSPREE_ENDPOINT = ''; // e.g. 'https://formspree.io/f/xxxxxxx'
+
+    // =================== UTILITIES ===================
+    const $ = (sel, el=document) => el.querySelector(sel);
+    const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
+
+    // Dark mode
+    const applyTheme = (t) => {
+      if (t === 'dark') document.documentElement.classList.add('dark');
+      else document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', t);
+      $('#sun').classList.toggle('hidden', t !== 'light');
+      $('#moon').classList.toggle('hidden', t === 'light');
+    };
+    const initialTheme = localStorage.getItem('theme') || 'dark';
+    applyTheme(initialTheme);
+    $('#themeToggle').addEventListener('click', () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      applyTheme(isDark ? 'light' : 'dark');
+    });
+
+    // Accent color
+    const setAccent = (hex) => {
+      document.documentElement.style.setProperty('--accent', hex);
+      $('meta[name="theme-color"]').setAttribute('content', hex);
+      localStorage.setItem('accent', hex);
+    };
+    setAccent(localStorage.getItem('accent') || getComputedStyle(document.documentElement).getPropertyValue('--accent'));
+    $('#colorBtn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      $('#colorMenu').classList.toggle('hidden');
+    });
+    $$('#colorMenu [data-color]').forEach(b => b.addEventListener('click', () => {
+      setAccent(b.dataset.color);
+      $('#colorMenu').classList.add('hidden');
+    }));
+    document.addEventListener('click', () => $('#colorMenu').classList.add('hidden'));
+
+    // Mobile nav
+    $('#menuBtn').addEventListener('click', () => $('#mobileNav').classList.toggle('hidden'));
+
+    // Typed roles
+    new Typed('#typed', {
+      strings: ['React • Next.js', 'Design Systems', 'Performance & A11y', 'TypeScript'],
+      typeSpeed: 40, backSpeed: 24, backDelay: 1200, loop: true
+    });
+
+    // VanillaTilt for project cards
+    VanillaTilt.init($$('.tilt'), { max: 8, speed: 400, glare: true, 'max-glare': .15 });
+
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('show'); });
+    }, { threshold: .12 });
+    $$('.reveal').forEach(el => io.observe(el));
+
+    // Filters
+    $$('.filter-btn').forEach(btn => btn.addEventListener('click', () => {
+      const f = btn.dataset.filter;
+      $$('.project-card').forEach(card => {
+        const show = f === 'all' || card.dataset.tags.includes(f);
+        card.classList.toggle('hidden', !show);
+      });
+      $$('.filter-btn').forEach(b => b.classList.remove('bg-white/10'));
+      btn.classList.add('bg-white/10');
+    }));
+
+    // Count-up metrics
+    const countIo = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target; const target = +el.dataset.target; let cur = 0;
+        const step = Math.max(1, Math.ceil(target / 60));
+        const tick = () => { cur += step; if (cur >= target) { el.textContent = target; } else { el.textContent = cur; requestAnimationFrame(tick); } };
+        tick(); obs.unobserve(el);
+      });
+    }, { threshold: .6 });
+    $$('.count').forEach(el => countIo.observe(el));
+
+    // Slider
+    const slider = $('#slider');
+    const dots = $$('.dot');
+    let slide = 0;
+    const go = (i) => {
+      slide = i % dots.length; if (slide < 0) slide = dots.length - 1;
+      slider.style.transform = `translateX(-${slide * 100}%)`;
+      dots.forEach((d, idx) => d.style.background = idx === slide ? 'rgba(255,255,255,.2)' : 'rgba(255,255,255,.1)');
+    }
+    dots.forEach((d, i) => d.addEventListener('click', () => go(i)));
+    setInterval(() => go(slide + 1), 5000);
+
+    // Command palette
+    const cmd = $('#cmdk'); const cmdInput = $('#cmdInput');
+    const openCmd = () => { cmd.showModal(); cmdInput.focus(); }
+    document.addEventListener('keydown', (e) => { if ((e.key === 'k' && (e.ctrlKey || e.metaKey)) || e.key === '/') { e.preventDefault(); openCmd(); } if (e.key === 'Escape' && cmd.open) cmd.close(); });
+    $('#cmdList').addEventListener('click', (e) => { const t = e.target.closest('[data-jump]'); if (!t) return; location.hash = t.dataset.jump; cmd.close(); });
+
+    // Footer year
+    $('#year').textContent = new Date().getFullYear();
+
+    // Contact form
+    $('#contactForm').addEventListener('submit', async (e) => {
+      e.preventDefault(); const form = e.currentTarget; const status = $('#formStatus');
+      const data = Object.fromEntries(new FormData(form).entries());
+      if (!FORMSPREE_ENDPOINT) { status.textContent = 'Configure FORMSPREE_ENDPOINT to enable submissions.'; return; }
+      try {
+        const r = await fetch(FORMSPREE_ENDPOINT, { method: 'POST', headers: { 'Accept': 'application/json' }, body: new FormData(form) });
+        if (r.ok) { status.textContent = 'Thanks. I will reply soon.'; form.reset(); }
+        else { status.textContent = 'Submission failed.'; }
+      } catch {
+        status.textContent = 'Network error.';
+      }
+    });
+
+    // Update hero info from PROFILE
+    document.title = `${PROFILE.name} | Frontend Portfolio`;
+    document.querySelectorAll('a[href^="mailto:"]').forEach(a => a.href = `mailto:${PROFILE.email}`);
+  </script>
+</body>
+</html>
